@@ -23,6 +23,8 @@ export default {
       const requestUrl = new URL(request.url)
       requestUrl.host = "api.openai.com"
       request = new Request(requestUrl, request)
+      //如需前端发送API Key，注释掉下一行
+      request.headers.set('Authorization', 'Bearer sk-your-token')
       const response = await fetch(request)
       const corsResponse = new Response(response.body, response)
       corsResponse.headers.set('Access-Control-Allow-Origin', '*')
