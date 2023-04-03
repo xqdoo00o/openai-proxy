@@ -29,7 +29,7 @@ export default {
       const corsResponse = new Response(response.body, response)
       corsResponse.headers.set('Access-Control-Allow-Origin', '*')
       corsResponse.headers.set('Cache-Control', 'no-store')
-      //gzip压缩api响应，打开域名面板->速度->优化，关闭Brotli后才会生效
+      //gzip压缩api响应，打开域名配置面板->速度->优化，关闭Brotli后才会生效
       corsResponse.headers.set('Content-Encoding', 'gzip')
       return corsResponse
     } else {
