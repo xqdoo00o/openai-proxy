@@ -1,6 +1,6 @@
 # OpenAI-Proxy
 ## Cloudflare Worker
-创建Cloudflare Worker服务->HTTP路由器，快速编辑->配置如下
+创建Worker服务->Deploy->Edit Code，代码如下
 ```
 // 是否拒绝所有无 Origin 请求
 const ALLOW_NO_ORIGIN = false;
@@ -23,8 +23,10 @@ export default {
       const requestUrl = new URL(request.url)
       requestUrl.host = "api.openai.com"
       request = new Request(requestUrl, request)
-      //如需前端发送API Key，注释掉下一行
-      request.headers.set('Authorization', 'Bearer sk-your-token')
+      //如需前端发送API Key，注释掉下面三行
+      if(!request.headers.get('Authorization')){
+        request.headers.set('Authorization', 'Bearer sk-your-token')
+      }
       return await fetch(request)
     } else {
       return new Response('[CloudFlare Workers] REQUEST NOT ALLOWED', {status: 403});
